@@ -2,9 +2,7 @@
     <div class="card" style="width: 50rem;">
 
         <form class="p-5" action="<?= base_url('login/submit') ?>" method="post" name="myForm">
-            <h6 class="mb-3" style="color: red"><?php
-                echo $this->session->flashdata('msg');
-                ?></h6>
+            <h6 class="mb-3" style="color: red" ></h6>
             <div class="mb-3">
                 <label class="form-label">Username</label>
                 <input type="text" class="form-control" name="name" ng-model="user" required>

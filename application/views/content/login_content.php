@@ -14,5 +14,5 @@
         </div>
         
     </body>
-    <footer class=" row justify-content-center text-white">This site reserved by CIBL</footer>
+    <footer class=" row justify-content-center">This site reserved by CIBL</footer>
 </html>

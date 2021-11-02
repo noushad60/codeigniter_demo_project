@@ -18,8 +18,8 @@
             <td><?php echo $row->name;?></td>  
             <td><?php echo $row->email;?></td> 
             <td><?php echo $row->address;?></td> 
-            <td><a href="<?= base_url("site/edit/{$id}") ?>"><button>edit</button></a>
-            <a href="<?= base_url("site/delete/{$id}") ?>"><button>delete</button></a></td>
+            <td><a class="mx-2" href="<?= base_url("site/edit/{$id}") ?>"><button>edit</button></a>
+                <a class="mx-2" href="<?= base_url("site/delete/{$id}") ?>"><button>delete</button></a><button class="mx-2" onclick="window.print()">Print</button></td>
             </tr>  
          <?php }  
          ?>  
