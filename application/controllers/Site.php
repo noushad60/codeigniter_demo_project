@@ -10,22 +10,24 @@ class Site extends CI_Controller {
     }
 
     public function index() {
-        $data['page_title'] = 'site create';
-        $data['page'] = 'site/home.php';
-        $this->load->view('content/master_content', $data);
+        if ($this->session->userdata('user') != '') {
+            $data['page_title'] = 'site create';
+            $data['page'] = 'site/home.php';
+            $this->load->view('content/master_content', $data);
+        } else {
+            redirect(base_url() . 'login/index');
+        }
     }
 
-    public function about() {
-        $this->load->view('site/about');
-    }
-//
-   
     public function create() {
-//        $data['base_url'] = base_url();
-        $data['page_title'] = 'site create';
-        $data['page'] = 'site/create.php';
+        if ($this->session->userdata('user') != '') {
+            $data['page_title'] = 'site create';
+            $data['page'] = 'site/create.php';
 
-        $this->load->view('content/master_content', $data);
+            $this->load->view('content/master_content', $data);
+        } else {
+            redirect(base_url() . 'login/index');
+        }
     }
 
     public function submit() {
@@ -38,7 +40,7 @@ class Site extends CI_Controller {
         );
         $this->site_model->addUser($data);
         return redirect('site/create');
-        
+
 //        exit();
 //        echo "<meta http-equiv='refresh' content='0'>";
 //        echo $query;
@@ -58,19 +60,27 @@ class Site extends CI_Controller {
     }
 
     public function info() {
-        $data['info'] = $this->site_model->retrive();
-        $data['page_title'] = 'information';
-        $data['page'] = 'site/info.php';
+        if ($this->session->userdata('user') != '') {
+            $data['info'] = $this->site_model->retrive();
+            $data['page_title'] = 'information';
+            $data['page'] = 'site/info.php';
 
-        $this->load->view('content/master_content', $data);
+            $this->load->view('content/master_content', $data);
+        } else {
+            redirect(base_url() . 'login/index');
+        }
     }
 
     public function edit($id) {
 
-        $data['page_title'] = 'site update';
-        $data['page'] = 'site/edit.php';
-        $data['info'] = $this->site_model->edit($id);
-        $this->load->view('content/master_content', $data);
+        if ($this->session->userdata('user') != '') {
+            $data['page_title'] = 'site update';
+            $data['page'] = 'site/edit.php';
+            $data['info'] = $this->site_model->edit($id);
+            $this->load->view('content/master_content', $data);
+        } else {
+            redirect(base_url() . 'login/index');
+        }
     }
 
     public function update() {
@@ -84,22 +94,29 @@ class Site extends CI_Controller {
         $this->db->where('id', $id);
         $query = $this->db->update('user', $data);
         $this->error_handle($query);
-        
+        if($query){
+            redirect(base_url().'site/info');
+        }
     }
 
     public function delete($id) {
         $this->db->where('id', $id);
-        $query=$this->db->delete('user');
+        $query = $this->db->delete('user');
         $this->error_handle($query);
         return redirect('site/info');
     }
-    
+
     public function error_handle($query) {
         if ($query) {
             echo 'Data updated successfully';
         } else {
             die('Data update fail');
         }
+    }
+
+    public function logout() {
+        $this->session->unset_userdata('user');
+        redirect(base_url() . 'login/index');
     }
 
 }

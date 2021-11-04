@@ -8,6 +8,7 @@
 
     </head>
     <body ng-app="">
+        
         <!--content-->
         <div class="container">
             <ul class="nav nav-tabs">
@@ -19,6 +20,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('site/create') ?>">New User</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('site/logout') ?>">logout</a>
                 </li>
             </ul>
             <?php $this->load->view($page); ?>

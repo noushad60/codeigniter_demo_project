@@ -9,23 +9,31 @@ class Login extends CI_Controller {
         $this->load->model('login_model');
     }
 
-    public function registration() {
-        $data['message'] = '';
-        $data['page_title'] = 'Registration';
-        $data['page'] = 'login/registration_page';
+    public function index() {
+        if ($this->session->userdata('user') != '') {
+            redirect(base_url() . 'site/index');
+        } else {
+            $data['page_title'] = 'Login';
+            $data['page'] = 'login/login_page.php';
 
-        $this->load->view('content/login_content', $data);
+            $this->load->view('content/login_content', $data);
+        }
     }
 
-    public function index() {
-        $data['page_title'] = 'Login';
-        $data['page'] = 'login/login_page.php';
+    public function registration() {
+        if ($this->session->userdata('user') != '') {
+            redirect(base_url() . 'site/index');
+        } else {
+            $data['message'] = '';
+            $data['page_title'] = 'Registration';
+            $data['page'] = 'login/registration_page';
 
-        $this->load->view('content/login_content', $data);
+            $this->load->view('content/login_content', $data);
+        }
     }
 
     public function submit() {
-        
+
         $this->load->helper('form', 'url');
         $this->form_validation->set_rules('name', 'Username', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
@@ -42,7 +50,7 @@ class Login extends CI_Controller {
             redirect('login/index');
         } else {
             $message = validation_errors();
-            $this->session->set_flashdata('msg',$message);
+            $this->session->set_flashdata('msg', $message);
             redirect('login/registration');
         }
 //        print_r($_POST);
@@ -60,7 +68,8 @@ class Login extends CI_Controller {
 //        print_r($result);
 
         if ($result) {
-            return redirect('site/index');
+            $this->session->set_userdata('user', $user);
+            redirect('site/index');
         } else {
             $message = 'Incorrect username & Password';
             $this->session->set_flashdata('msg', $message);
